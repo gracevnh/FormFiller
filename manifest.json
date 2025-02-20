@@ -1,0 +1,12 @@
+{
+  "name": "FormFiller",
+  "description": "Automating the process of filling out online forms.",
+  "version": "1.0",
+  "permissions": ["activeTab", "storage", "scripting"],
+  "action": {
+    "default_icon": "icon.png",
+    "default_title": "FormFiller!",
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 3
+}
