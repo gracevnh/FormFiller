@@ -1,12 +1,15 @@
 {
   "name": "FormFiller",
-  "description": "Automating the process of filling out online forms.",
+  "description": "Parses input fields from a webpage and logs them to the console.",
   "version": "1.0",
-  "permissions": ["activeTab", "storage", "scripting", "sidePanel"],
+  "manifest_version": 3,
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
   "action": {
-    "default_icon": "icon.png",
-    "default_title": "FormFiller!",
+    "default_title": "Parse Inputs",
     "default_popup": "popup.html"
   },
-  "manifest_version": 3
+  "background": {
+    "service_worker": "background.js"
+  }
 }
