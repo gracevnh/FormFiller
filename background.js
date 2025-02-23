@@ -10,7 +10,11 @@ chrome.action.onClicked.addListener((tab) => {
       console.error("Script execution failed:", error);
     });
   });
-  
+
+  chrome.sidePanel
+  .setPanelBehavior({ openPanelOnActionClick: false })
+  .catch(console.error);
+
   // Function to extract and print field titles to the console
   function extractFieldTitles() {
     console.log("Extracting input field titles...");
