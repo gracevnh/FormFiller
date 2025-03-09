@@ -8,13 +8,19 @@
   "action": {
     "default_title": "Parse Inputs",
     "default_popup": "popup.html",
-    "default_panel": "sidepanel.html"
+    "default_panel": "sidepanel.html",
+    "default_icon": {
+      "16": "icon.png"
+    }
   },
   "background": {
     "service_worker": "background.js"
   },
   "side_panel": {
     "default_path": "sidepanel.html"
+  },
+  "icons": {
+    "16": "icon.png"
   },
   "content_scripts": [
 		{

@@ -72,3 +72,36 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
+
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+  font-size: 14px; 
+  background-color: white; 
+  cursor: pointer; 
+  appearance: none; 
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+hr {
+  border: none; /* Remove default styling */
+  height: 1px; /* Set a visible height */
+  background-color: #ccc; /* Light gray line */
+  margin: 10px 0; /* Reduce spacing above and below */
+  width: 100%; /* Ensure full width */
+}
+
+

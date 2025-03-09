@@ -3,31 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Sidepanel</title>
+    <title>FormFiller</title>
     <link rel="stylesheet" href="sidepanel.css" />
   </head>
   <body>
     <div class="container">
-      <h2 class="title">Input Fields</h2>
+      <h2 class="title">FormFiller.</h2>
+      <hr>
       <form id="input-form">
+        <h3 style="text-align: center; width: 100%;">Personal</h3>
+
         <label for="fname">First Name</label>
-        <input type="text" id="fname" placeholder="Enter your firstname" />
+        <input type="text" id="fname" placeholder="Enter your first name" />
+
+        <label for="mname">Middle Name</label>
+        <input type="text" id="mname" placeholder="Enter your middle name (optional)" />
 
         <label for="lname">Last Name</label>
-        <input type="text" id="lname" placeholder="Enter your lastname" />
+        <input type="text" id="lname" placeholder="Enter your last name" />
 
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter your email" />
-
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" placeholder="Enter your phone number" />
+        <label for="nickname">Preferred Name</label>
+        <input type="text" id="preferredName" placeholder="Enter your preferred name (optional)" />
 
         <label for="dob">Date of Birth</label>
         <input type="date" id="dob" />
 
-        <button id="save-data" type="button">Submit</button>
+        <label for="gender">Gender</label>
+        <select id="gender">
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="nationality">Nationality</label>
+        <input type="text" id="nationality" placeholder="Enter your nationality" />
+
+        <hr>
+        <h3 style="text-align: center; width: 100%;">Address</h3>
+
+        <label for="address">Street Address</label>
+        <input type="text" id="address" placeholder="Enter your address" />
+
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Enter your city" />
+
+        <label for="state">State/Province</label>
+        <input type="text" id="state" placeholder="Enter your state" />
+
+        <label for="zip">ZIP/Postal Code</label>
+        <input type="text" id="zip" placeholder="Enter your ZIP code" />
+
+        <label for="country">Country</label>
+        <input type="text" id="country" placeholder="Enter your country" />
+
+        <hr>
+        <h3 style="text-align: center; width: 100%;">Login</h3>
+
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter your username" />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" />
+
+        <hr>
+        <h3 style="text-align: center; width: 100%;">Payment</h3>
+
+        <label for="cc-number">Credit Card Number</label>
+        <input type="text" id="cc-number" placeholder="Enter your card number" />
+
+        <label for="cc-expiry">Expiration Date</label>
+        <input type="month" id="cc-expiry" />
+
+        <label for="cc-cvv">CVV</label>
+        <input type="text" id="cc-cvv" placeholder="Enter CVV" />
+
+        <hr>
+        <h3 style="text-align: center; width: 100%;">Additional Info</h3>
+
+        <label for="notes">Notes</label>
+        <textarea id="notes" placeholder="Enter any additional notes"></textarea><br>
+
+        <button id="save-data" type="button">Submit</button> <br>
         <!-- test -->
-        <button id="test" type="button"> TEST</button>
+        <button id="test" type="button"> TEST</button> <br>
         <button id="fill-form" type="button"> FILL FORM</button>
       </form>
     </div>
