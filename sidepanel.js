@@ -110,3 +110,47 @@ testButton.addEventListener("click", function () {
       alert(error);
     });
 });
+
+const fillFormButton = document.getElementById("fill-form");
+
+// on click of fill form button
+fillFormButton.addEventListener("click", function () {
+    console.log("Fill Form Button clicked");
+
+    // getting the active tab
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        // error check -> no active tab
+        if (!tabs.length) {
+            console.error("No active tabs found.");
+            return;
+        }
+
+        // Injecting my autofill script into the active tab
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            files: ["autofill.js"]
+        }).then(() => {
+            console.log("autofill script injected");
+            
+            // sending message to the content script
+            chrome.tabs.sendMessage(tabs[0].id, { action: "autofill_form" }, function (response) {
+
+              // error check -> no response from content script
+                if (chrome.runtime.lastError) {
+                    console.error("Error sending message:", chrome.runtime.lastError);
+                } else if (response && response.success) {
+                  // success message
+                    console.log("Message received:", response);
+                } else {
+                    console.log("No response from content script??");
+                }
+
+            });
+
+        }).catch(function(error) {
+          console.log(error);
+          alert(error);
+        });
+
+    });
+});

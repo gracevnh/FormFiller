@@ -33,4 +33,32 @@ chrome.action.onClicked.addListener((tab) => {
   
     console.log("Finished parsing input fields.");
   }
-  
+
+  // listening for messages from the side panel
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    // autofill form request
+    if (request.action === "autofill_form") {
+        console.log("autofill req received from side panel");
+        
+        // getting the active tab
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (tabs.length === 0) {
+                console.error("no active tabs atm");
+                return;
+            }
+
+            // inject autofill script
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                function: autofillForm
+            }).then(() => {
+                sendResponse({ success: true });
+            }).catch(error => {
+                console.error("Failed to execute autofillForm:", error);
+                sendResponse({ success: false, error: error.message });
+            });
+
+            return true;
+        });
+    }
+});
