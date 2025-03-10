@@ -23,6 +23,13 @@ function autofillForm() {
             if (idx < values.length) { input.value = values[idx++];  }
         });
 
+        // Example code
+        // document.getElementById("fname").value = userProfile.fname || "";
+        // document.getElementById("lname").value = userProfile.lname || "";
+        // document.getElementById("email").value = userProfile.email || "";
+        // document.getElementById("phone").value = userProfile.phone || "";
+        // document.getElementById("dob").value = userProfile.dob || "";
+
         console.log("autofill complete :)");
     })
     .catch(function(error) {

@@ -75,45 +75,8 @@ saveButton.addEventListener("click", function () {
   });
 });
 
-function getProfile(name) {
-    // Promise because chrome.storage.local.get is async
-    return new Promise(function(resolve, reject) {
-        chrome.storage.local.get(name, function(result) {
-            if (result[name]) {
-                const userProfile = new Profile(result[name]);
-                resolve(userProfile);
-            } else {
-                reject("Profile not found.");
-            }
-        });
-    });
-}
-
-// remove this when done, test code
-const testButton = document.getElementById("test")
-testButton.addEventListener("click", function () {
-    console.log("Button clicked");
-    // test
-    getProfile("input")
-    .then(function(userProfile) {
-      document.getElementById("fname").value = userProfile.fname || "";
-      document.getElementById("lname").value = userProfile.lname || "";
-      document.getElementById("email").value = userProfile.email || "";
-      document.getElementById("phone").value = userProfile.phone || "";
-      document.getElementById("dob").value = userProfile.dob || "";
-
-      console.log("Profile loaded successfully:", userProfile);
-      alert("Profile loaded successfully!");
-    })
-    .catch(function(error) {
-      console.log(error);
-      alert(error);
-    });
-});
-
-const fillFormButton = document.getElementById("fill-form");
-
 // on click of fill form button
+const fillFormButton = document.getElementById("fill-form");
 fillFormButton.addEventListener("click", function () {
     console.log("Fill Form Button clicked");
 
