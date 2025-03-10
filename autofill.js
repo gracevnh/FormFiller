@@ -1,15 +1,20 @@
+function getProfile(key) {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(key, function(data) {
+        if (chrome.runtime.lastError) {
+          return reject(chrome.runtime.lastError);
+        }
+        resolve(data[key] || {});
+      });
+    });
+}
+
 function autofillForm() {
     console.log("autofill start");
 
-    // getting stored data
-    chrome.storage.local.get("input", function (data) {
-        if (!data.input) {
-            console.log("No form data found.");
-            return;
-        }
-
-        // getting stored data
-        let values = Object.values(data.input);
+    getProfile("input")
+    .then(function(userProfile) {
+        let values = Object.values(userProfile);
         let idx = 0;
 
         // fill in input text fields, swap out textarea for other input types
@@ -19,6 +24,10 @@ function autofillForm() {
         });
 
         console.log("autofill complete :)");
+    })
+    .catch(function(error) {
+      console.log(error);
+      alert(error);
     });
 }
 
