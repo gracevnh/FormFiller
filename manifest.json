@@ -7,7 +7,6 @@
   "host_permissions": ["<all_urls>"],
   "action": {
     "default_title": "Parse Inputs",
-    "default_popup": "popup.html",
     "default_panel": "sidepanel.html",
     "default_icon": {
       "16": "icon.png"

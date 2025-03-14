@@ -12,7 +12,7 @@ chrome.action.onClicked.addListener((tab) => {
   });
 
   chrome.sidePanel
-  .setPanelBehavior({ openPanelOnActionClick: false })
+  .setPanelBehavior({ openPanelOnActionClick: true })
   .catch(console.error);
 
   // Function to extract and print field titles to the console
