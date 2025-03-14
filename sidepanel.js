@@ -41,38 +41,46 @@ saveButton.addEventListener("click", function () {
     alert("Last Name is required.");
     return;
   }
-  if (!email.value.trim()) {
-    alert("Email is required.");
-    return;
-  }
-  if (!email.value.includes("@")) {
-    alert("Please enter a valid email address.");
-    return;
-  }
-  if (!phone.value.trim()) {
-    alert("Phone Number is required.");
-    return;
-  }
-  if (!/^\d+$/.test(phone.value)) {
-    alert("Phone Number must contain only digits.");
-    return;
-  }
-  if (!dob.value.trim()) {
-    alert("Date of Birth is required.");
-    return;
-  }
+  // if (!email.value.trim()) {
+  //   alert("Email is required.");
+  //   return;
+  // }
+  // if (!email.value.includes("@")) {
+  //   alert("Please enter a valid email address.");
+  //   return;
+  // }
+  // if (!phone.value.trim()) {
+  //   alert("Phone Number is required.");
+  //   return;
+  // }
+  // if (!/^\d+$/.test(phone.value)) {
+  //   alert("Phone Number must contain only digits.");
+  //   return;
+  // }
+  // if (!dob.value.trim()) {
+  //   alert("Date of Birth is required.");
+  //   return;
+  // }
 
   data.fname = fname.value;
   data.lname = lname.value;
-  data.email = email.value;
-  data.phone = phone.value;
-  data.dob = dob.value;
+  // data.email = email.value;
+  // data.phone = phone.value;
+  // data.dob = dob.value;
 
   // need to change "input" to something else. currently it is just a dummy name
-  chrome.storage.local.set({ input: data }, function () {
-    console.log("Data saved!", data);
-    alert("Form submitted successfully!");
-  });
+
+
+  // Saving every user in the database as their full name
+  let key = data.fname + data.lname;
+
+  // Store data in chrome.storage.local with the unique key
+  chrome.storage.local.set({ [key]: data }, function () {
+      console.log("Data saved:", key, data);
+      alert("Form submitted successfully!");
+  })
+
+  showProfilesFunction();
 });
 
 // on click of fill form button
@@ -116,4 +124,24 @@ fillFormButton.addEventListener("click", function () {
         });
 
     });
+  
 });
+
+
+function showProfilesFunction() {
+  const showProfiles = document.getElementById("show-profiles");
+  const selectElement = showProfiles.querySelector("select");
+  selectElement.innerHTML = ""; // Clear existing options
+
+  chrome.storage.local.get(null, function (profiles) {
+      for (let key in profiles) {
+          const profile = new Profile(profiles[key]);
+          const option = document.createElement("option");
+          option.value = key;
+          option.text = profile.fullname;
+          selectElement.add(option);
+      }
+  });
+}
+
+showProfilesFunction();

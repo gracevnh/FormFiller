@@ -48,4 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("Finished parsing input fields.");
   }
+
+  // Open up the side panel on sidepanel 
 });
