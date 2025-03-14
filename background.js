@@ -38,6 +38,8 @@ chrome.action.onClicked.addListener((tab) => {
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // autofill form request
     if (request.action === "autofill_form") {
+        const profileKey = request.profileKey;
+        console.log("profile key in background:", profileKey);
         console.log("autofill req received from side panel");
         
         // getting the active tab
@@ -50,7 +52,8 @@ chrome.action.onClicked.addListener((tab) => {
             // inject autofill script
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
-                function: autofillForm
+                function: autofillForm,
+                args: [profileKey]  
             }).then(() => {
                 sendResponse({ success: true });
             }).catch(error => {

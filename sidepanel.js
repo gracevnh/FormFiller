@@ -88,6 +88,8 @@ const fillFormButton = document.getElementById("fill-form");
 fillFormButton.addEventListener("click", function () {
     console.log("Fill Form Button clicked");
 
+    profileName = document.getElementById("show-profiles").querySelector("select").value;
+    
     // getting the active tab
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         // error check -> no active tab
@@ -104,8 +106,8 @@ fillFormButton.addEventListener("click", function () {
             console.log("autofill script injected");
             
             // sending message to the content script
-            chrome.tabs.sendMessage(tabs[0].id, { action: "autofill_form" }, function (response) {
-
+            chrome.tabs.sendMessage(tabs[0].id, { action: "autofill_form",  profileKey: profileName }, function (response) {
+              console.log("profile key in sidepanel:", profileName);
               // error check -> no response from content script
                 if (chrome.runtime.lastError) {
                     console.error("Error sending message:", chrome.runtime.lastError);

@@ -9,14 +9,16 @@ function getProfile(key) {
     });
 }
 
-function autofillForm() {
+function autofillForm(key) {
     console.log("autofill start");
+    console.log("key", key);
 
-    getProfile("input")
+    getProfile(key)
     .then(function(userProfile) {
         let values = Object.values(userProfile);
         let idx = 0;
 
+        console.log("userProfile", userProfile);
         // fill in input text fields, swap out textarea for other input types
         let textInputs = document.querySelectorAll("input:not([type='hidden']), textarea");
         textInputs.forEach(input => {
@@ -41,7 +43,7 @@ function autofillForm() {
 // listen for messages from background/sidepanel
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "autofill_form") {
-        autofillForm();
+        autofillForm(request.profileKey);
         sendResponse({ success: true }); // send back success response
     }
 });
