@@ -83,6 +83,34 @@ saveButton.addEventListener("click", function () {
   showProfilesFunction();
 });
 
+// Event listener for "Create Account" button
+const createAccountButton = document.getElementById("create-account");
+
+createAccountButton.addEventListener("click", function () {
+  const fillFormPage = document.getElementById("fill-form-page");
+
+  // Toggle visibility of the form
+  if (fillFormPage.style.display === "none" || fillFormPage.style.display === "") {
+    fillFormPage.style.display = "flex";  // Show the form
+  } else {
+    fillFormPage.style.display = "none";  // Hide the form (completely removes from the layout)
+  }
+});
+
+// Event listener for "Tutorial" button
+const tutorialButton = document.getElementById("tutorial");
+
+tutorialButton.addEventListener("click", function () {
+  const tutorialInfo = document.getElementById("tutorial-info");
+
+  // Toggle visibility of the form
+  if (tutorialInfo.style.display === "none" || tutorialInfo.style.display === "") {
+    tutorialInfo.style.display = "flex";  // Show the form
+  } else {
+    tutorialInfo.style.display = "none";  // Hide the form (completely removes from the layout)
+  }
+});
+
 // on click of fill form button
 const fillFormButton = document.getElementById("fill-form");
 fillFormButton.addEventListener("click", function () {

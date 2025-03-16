@@ -97,11 +97,21 @@ select:focus {
 }
 
 hr {
-  border: none; /* Remove default styling */
-  height: 1px; /* Set a visible height */
-  background-color: #ccc; /* Light gray line */
-  margin: 10px 0; /* Reduce spacing above and below */
-  width: 100%; /* Ensure full width */
+  border: none; 
+  height: 1px;
+  background-color: #ccc; 
+  margin: 10px 0; 
+  width: 100%; 
 }
 
+#fill-form-page {
+  display: none;  /* Initially hidden */
+  width: 100%;
+  flex-direction: column;
+}
 
+#tutorial-info {
+  display: none;  /* Initially hidden */
+  width: 100%;
+  flex-direction: column;
+}
