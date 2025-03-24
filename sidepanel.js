@@ -24,10 +24,19 @@ class Profile {
 
 // update this when new fields are added
 const fname = document.getElementById("fname");
+const mname = document.getElementById("mname");
 const lname = document.getElementById("lname");
 const email = document.getElementById("email");
 const phone = document.getElementById("phone");
 const dob = document.getElementById("dob");
+const gender = document.getElementById("gender");
+const address = document.getElementById("address");
+const city = document.getElementById("city");
+const state = document.getElementById("state");
+const country = document.getElementById("country");
+const username = document.getElementById("username");
+const notes = document.getElementById("notes");
+
 const saveButton = document.getElementById("save-data");
 
 saveButton.addEventListener("click", function () {
@@ -41,35 +50,36 @@ saveButton.addEventListener("click", function () {
     alert("Last Name is required.");
     return;
   }
-  // if (!email.value.trim()) {
-  //   alert("Email is required.");
-  //   return;
-  // }
-  // if (!email.value.includes("@")) {
-  //   alert("Please enter a valid email address.");
-  //   return;
-  // }
-  // if (!phone.value.trim()) {
-  //   alert("Phone Number is required.");
-  //   return;
-  // }
-  // if (!/^\d+$/.test(phone.value)) {
-  //   alert("Phone Number must contain only digits.");
-  //   return;
-  // }
-  // if (!dob.value.trim()) {
-  //   alert("Date of Birth is required.");
-  //   return;
-  // }
+  if (!email.value.trim()) {
+    alert("Email is required.");
+    return;
+  }
+  if (!email.value.includes("@")) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+  if (!phone.value.trim()) {
+    alert("Phone Number is required.");
+    return;
+  }
+  if (!/^\d+$/.test(phone.value)) {
+    alert("Phone Number must contain only digits.");
+    return;
+  }
 
   data.fname = fname.value;
   data.lname = lname.value;
-  // data.email = email.value;
-  // data.phone = phone.value;
-  // data.dob = dob.value;
-
-  // need to change "input" to something else. currently it is just a dummy name
-
+  data.email = email.value;
+  data.phone = phone.value;
+  data.dob = dob.value;
+  data.mname = mname.value;
+  data.gender = gender.value;
+  data.address = address.value;
+  data.city = city.value;
+  data.state = state.value;
+  data.country = country.value;
+  data.username = username.value;
+  data.notes = notes.value;
 
   // Saving every user in the database as their full name
   let key = data.fname + data.lname;
@@ -126,33 +136,45 @@ fillFormButton.addEventListener("click", function () {
             return;
         }
 
-        // Injecting my autofill script into the active tab
+        // Inject scripts into the active tab
         chrome.scripting.executeScript({
             target: { tabId: tabs[0].id },
-            files: ["autofill.js"]
+            files: ["string-similarity.js"]
+        }).then(() => {
+            console.log("string-similiarity");
+
+            return chrome.scripting.executeScript({
+              target: { tabId: tabs[0].id },
+              files: ["fieldSynonyms.js"]
+            });
+        }).then(() => {
+            console.log("utils injected");
+
+            return chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                files: ["autofill.js"]
+            });
         }).then(() => {
             console.log("autofill script injected");
-            
-            // sending message to the content script
-            chrome.tabs.sendMessage(tabs[0].id, { action: "autofill_form",  profileKey: profileName }, function (response) {
+
+            chrome.tabs.sendMessage(tabs[0].id, { action: "autofill_form", profileKey: profileName }, function (response) {
               console.log("profile key in sidepanel:", profileName);
-              // error check -> no response from content script
-                if (chrome.runtime.lastError) {
-                    console.error("Error sending message:", chrome.runtime.lastError);
-                } else if (response && response.success) {
-                  // success message
-                    console.log("Message received:", response);
-                } else {
-                    console.log("No response from content script??");
-                }
-
-            });
-
-        }).catch(function(error) {
-          console.log(error);
-          alert(error);
-        });
-
+      
+              // Error check -> no response from content script
+              if (chrome.runtime.lastError) {
+                  console.error("Error sending message:", chrome.runtime.lastError);
+              } else if (response && response.success) {
+                  // Success message
+                  console.log("Message received:", response);
+              } else {
+                  console.log("No response from content script?");
+              }
+          });
+        }).catch((error) => {
+            // Catch and handle any errors that occur during script injection or messaging
+            console.error("Error during script injection or messaging:", error);
+            alert("An error occurred. Please check the console for details.");
+      });
     });
   
 });
