@@ -22,6 +22,14 @@ class Profile {
     }
 }
 
+// Track which profile is being edited
+let editingProfileKey = null;
+
+// Track editing
+let fillFormOpen = false;
+let editClickOne = false;
+let createClickOne = false;
+
 // update this when new fields are added
 const fname = document.getElementById("fname");
 const mname = document.getElementById("mname");
@@ -38,7 +46,10 @@ const username = document.getElementById("username");
 const notes = document.getElementById("notes");
 
 const saveButton = document.getElementById("save-data");
+const editProfileButton = document.getElementById("edit-profile");
+const deleteProfileButton = document.getElementById("delete-profile");
 
+/*
 saveButton.addEventListener("click", function () {
   const data = {};
 
@@ -92,19 +103,255 @@ saveButton.addEventListener("click", function () {
 
   showProfilesFunction();
 });
+*/
+
+// Save or Update Profile
+saveButton.addEventListener("click", function () {
+  if (!fname.value.trim()) {
+      alert("First Name is required.");
+      return;
+  }
+  if (!lname.value.trim()) {
+      alert("Last Name is required.");
+      return;
+  }
+  if (email.value.trim() && !email.value.includes("@")) {
+    alert("Please enter a valid email address.");
+    return;
+  }
+  if (phone.value.trim() && !/^\d+$/.test(phone.value)) {
+      alert("Phone number must contain only digits.");
+      return;
+  }
+
+  const data = {
+      fname: fname.value,
+      mname: mname.value,
+      lname: lname.value,
+      email: email.value,
+      phone: phone.value,
+      dob: dob.value,
+      gender: gender.value,
+      address: address.value,
+      city: city.value,
+      state: state.value,
+      country: country.value,
+      username: username.value,
+      notes: notes.value
+  };
+
+  // Use existing key if editing, otherwise create a new one
+  let key = editingProfileKey ? editingProfileKey : data.fname + data.lname;
+
+  chrome.storage.local.set({ [key]: data }, function () {
+      console.log(editingProfileKey ? "Profile updated:" : "New profile saved:", key, data);
+      alert(editingProfileKey ? "Profile updated successfully!" : "Profile created successfully!");
+
+      editingProfileKey = null; // Reset editing state
+      showProfilesFunction();
+  });
+
+  // Hide form after saving
+  document.getElementById("fill-form-page").style.display = "none";
+
+  // Update trackers
+  fillFormOpen = false;
+  editClickOne = false;
+  createClickOne = false;
+});
+
+// Edit Profile
+editProfileButton.addEventListener("click", function () {
+  const selectedProfileKey = document.getElementById("show-profiles").querySelector("select").value;
+
+  // click
+  if(!editClickOne){
+    editClickOne = true;
+    createClickOne = false;
+
+    console.log("im here edit");
+
+    /*
+    // check if both are true
+    if(editClickOne && createClickOne){
+      createClickOne = false;
+    }
+    */
+
+    if (!selectedProfileKey) {
+      alert("Please select a profile to edit.");
+      return;
+    }
+
+    // Update tracker
+    fillFormOpen = true;
+
+    chrome.storage.local.get(selectedProfileKey, function (result) {
+        if (!result[selectedProfileKey]) {
+            alert("Profile not found.");
+            return;
+        }
+
+        const profileData = result[selectedProfileKey];
+
+        // Store the profile key being edited
+        editingProfileKey = selectedProfileKey;
+
+        // Populate form fields with existing data
+        fname.value = profileData.fname || "";
+        mname.value = profileData.mname || "";
+        lname.value = profileData.lname || "";
+        email.value = profileData.email || "";
+        phone.value = profileData.phone || "";
+        dob.value = profileData.dob || "";
+        gender.value = profileData.gender || "";
+        address.value = profileData.address || "";
+        city.value = profileData.city || "";
+        state.value = profileData.state || "";
+        country.value = profileData.country || "";
+        username.value = profileData.username || "";
+        notes.value = profileData.notes || "";
+
+        // Show the form
+        document.getElementById("fill-form-page").style.display = "flex";
+    });
+  }
+  // if click twice
+  else if(fillFormOpen){
+    if(editClickOne){
+      document.getElementById("fill-form-page").style.display = "none";
+      editClickOne = false;
+      fillFormOpen = false;
+      createClickOne = false;
+    }
+  }
+  console.log("Form Closed - Updated States:");
+  console.log("editClickOne:", editClickOne);
+  console.log("createClickOne:", createClickOne);
+  console.log("fillFormOpen:", fillFormOpen);
+});
+
+// Delete Profile
+deleteProfileButton.addEventListener("click", function () {
+  const selectedProfileKey = document.getElementById("show-profiles").querySelector("select").value;
+
+  if (!selectedProfileKey) {
+      alert("Please select a profile to delete.");
+      return;
+  }
+
+  if (confirm("Are you sure you want to delete this profile? This action cannot be undone.")) {
+      chrome.storage.local.remove(selectedProfileKey, function () {
+          console.log("Profile deleted:", selectedProfileKey);
+          alert("Profile deleted successfully!");
+
+          // Refresh the dropdown list
+          showProfilesFunction();
+      });
+  }
+});
+
+/*
+// Create Account Button (Show Form)
+document.getElementById("create-account").addEventListener("click", function () {
+  const fillFormPage = document.getElementById("fill-form-page");
+
+  if (!fillFormPage) {
+      console.error("Error: 'fill-form-page' not found.");
+      return;
+  }
+
+  // Toggle visibility
+  if (fillFormPage.style.display === "none" || fillFormPage.style.display === "") {
+      fillFormPage.style.display = "flex";
+  } else {
+      fillFormPage.style.display = "none";
+  }
+
+  // Reset form fields for a new profile
+  fname.value = "";
+  mname.value = "";
+  lname.value = "";
+  email.value = "";
+  phone.value = "";
+  dob.value = "";
+  gender.value = "";
+  address.value = "";
+  city.value = "";
+  state.value = "";
+  country.value = "";
+  username.value = "";
+  notes.value = "";
+
+  // Reset editing mode to ensure we're creating a new profile
+  editingProfileKey = null;
+
+  console.log("Create Account button clicked, form is now visible.");
+});
+*/
 
 // Event listener for "Create Account" button
 const createAccountButton = document.getElementById("create-account");
 
-createAccountButton.addEventListener("click", function () {
+createAccountButton.addEventListener("click", function () {  
   const fillFormPage = document.getElementById("fill-form-page");
 
+  // first click
+  if(!createClickOne){
+    createClickOne = true;
+    editClickOne = false;
+
+    console.log("im here create");
+
+    /*
+    // check if both true
+    if(editClickOne && createClickOne){
+      editCreateOne = false;
+    }
+    */
+
+    if(fillFormOpen = true){
+      // Reset form fields for a new profile
+      fname.value = "";
+      mname.value = "";
+      lname.value = "";
+      email.value = "";
+      phone.value = "";
+      dob.value = "";
+      gender.value = "";
+      address.value = "";
+      city.value = "";
+      state.value = "";
+      country.value = "";
+      username.value = "";
+      notes.value = "";
+    }
+    document.getElementById("fill-form-page").style.display = "flex";
+    fillFormOpen = true;
+  }
+  // if click twice
+  else if(fillFormOpen){
+    if(createClickOne){
+      document.getElementById("fill-form-page").style.display = "none";
+      createClickOne = false;
+      fillFormOpen = false;
+      editClikeOne = false;
+    }
+  }
+
+  /*
   // Toggle visibility of the form
   if (fillFormPage.style.display === "none" || fillFormPage.style.display === "") {
     fillFormPage.style.display = "flex";  // Show the form
   } else {
     fillFormPage.style.display = "none";  // Hide the form (completely removes from the layout)
   }
+  */
+
+  console.log("Form Closed - Updated States:");
+  console.log("editClickOne:", editClickOne);
+  console.log("createClickOne:", createClickOne);
+  console.log("fillFormOpen:", fillFormOpen);
 });
 
 // Event listener for "Tutorial" button
@@ -127,6 +374,8 @@ fillFormButton.addEventListener("click", function () {
     console.log("Fill Form Button clicked");
 
     profileName = document.getElementById("show-profiles").querySelector("select").value;
+
+    console.log(profileName);
     
     // getting the active tab
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -179,7 +428,25 @@ fillFormButton.addEventListener("click", function () {
   
 });
 
+/*
+function showProfilesFunction() {
+  const showProfiles = document.getElementById("show-profiles");
+  const selectElement = showProfiles.querySelector("select");
+  selectElement.innerHTML = ""; // Clear existing options
 
+  chrome.storage.local.get(null, function (profiles) {
+      for (let key in profiles) {
+          const profile = new Profile(profiles[key]);
+          const option = document.createElement("option");
+          option.value = key;
+          option.text = profile.fullname;
+          selectElement.add(option);
+      }
+  });
+}
+*/
+
+// Show Profiles in Dropdown
 function showProfilesFunction() {
   const showProfiles = document.getElementById("show-profiles");
   const selectElement = showProfiles.querySelector("select");
