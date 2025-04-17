@@ -10,27 +10,24 @@ function getProfile(key) {
 }
 
 function autofillForm(key) {
-    console.log("autofill start");
-    console.log("profile:", key);
 
     getProfile(key)
     .then(function(userProfile) {
         let keys = Object.keys(userProfile);
         let values = Object.values(userProfile);
-        let usedFields = new Set();
         
         // fill in input text fields, swap out textarea for other input types
         let textInputs = document.querySelectorAll("input:not([type='hidden']), textarea");
         textInputs.forEach(input => {
-            const inputName = input.name.replace(/[^a-zA-Z]/g, '');
-            const bestMatch = getFieldMatch(inputName);
+            const match = findBestKeyMatch(input, fieldSynonyms, .6);
+            if (match) {
+              input.value = userProfile[match.key];
+            } else {
+              console.log(input.tagName, input.type, "No good match found (below threshold) for:", input.name || input.id);
+            }
 
-            if (usedFields.has(bestMatch) || bestMatch == null) return;
-
-            usedFields.add(bestMatch);
-            console.log(input.name, ": ", bestMatch);
-            console.log(input.name, ": ", userProfile[bestMatch]);
-            input.value = userProfile[bestMatch];
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+            input.dispatchEvent(new Event("change", { bubbles: true }));
         });
 
         console.log("autofill complete :)");
@@ -49,31 +46,39 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-function getFieldMatch(inputName) {
-  const fieldNames = Object.keys(fieldSynonyms);
+function findBestKeyMatch(formElement, fieldSynonyms, threshold = 0.6) { 
   let bestMatch = null;
-  let highestRating = 0;
+  let highestSimilarity = 0;
 
-  // Iterate through fieldSynonyms to find the best match
-  fieldNames.forEach(field => {
-      // Get all possible field aliases for this field
-      const aliases = fieldSynonyms[field];
+  const identifiers = {
+    'label': getLabelText(formElement)?.toLowerCase().replace(/[^a-z]/g, '') || '',
+    'ariaLabel': formElement.getAttribute('aria-label')?.toLowerCase().replace(/[^a-z]/g, '') || '',
+    'name': formElement.name?.toLowerCase().replace(/[^a-z]/g, '') || '',
+    'id': formElement.id?.toLowerCase().replace(/[^a-z]/g, '') || '',
+    'placeholder': formElement.placeholder?.toLowerCase().replace(/[^a-z]/g, '') || '',
+    'title': formElement.title?.toLowerCase().replace(/[^a-z]/g, '') || ''
+  };
 
-      // Compare the input name with each alias using stringSimilarity
-      aliases.forEach(alias => {
-          const matchRating = compareTwoStrings(inputName.toLowerCase(), alias.toLowerCase());
-          // console.log(alias, "score: ", matchRating);
-          // If the current match is better, update the bestMatch and highestRating
-          if (matchRating > highestRating) {
-              bestMatch = field;
-              highestRating = matchRating;
-          }
-      });
-  });
+  for (const source in identifiers) {
+    const identifier = identifiers[source]; 
+    if (identifier && identifier.trim()) {
+      for (const primaryKey in fieldSynonyms) {
+        const aliases = fieldSynonyms[primaryKey];
+        const allTermsToMatch = [primaryKey, ...aliases];
+        const matches = findBestMatch(identifier, allTermsToMatch);
 
-  if (highestRating < .6) {
-    bestMatch = null;
+        if (matches.bestMatch.rating > highestSimilarity && matches.bestMatch.rating >= threshold) { 
+          highestSimilarity = matches.bestMatch.rating;
+          bestMatch = { key: primaryKey, score: highestSimilarity, source: source, matchedTerm: matches.bestMatch.target };
+        }
+      }
+    }
   }
 
   return bestMatch;
+}
+
+function getLabelText(element) {
+  const label = document.querySelector(`label[for="${element.id}"]`);
+  return label ? label.textContent.trim() : null;
 }
