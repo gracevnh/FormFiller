@@ -1,103 +1,63 @@
 const fieldSynonyms = {
   fname: [
-    "firstName",
-    "first_name",
-    "fname",
-    "givenName",
-    "given_name",
-    "first",
+    "firstname", "givenname", "first", "fname", "forename", "namefirst", "personalname", "firstnm", "namegiven", "initialname"
   ],
   mname: [
-    "middleName",
-    "middle_name",
-    "mname",
-    "m_initial",
-    "midName",
-    "middle",
+    "middlename", "middleinitial", "middle", "initial", "mi", "mname", "midnm", "mid", "secondname", "secondinitial"
   ],
   lname: [
-    "lastName",
-    "last_name",
-    "lname",
-    "surname",
-    "familyName",
-    "family_name",
-    "last",
+    "lastname", "surname", "familyname", "last", "lname", "namelast", "secondname", "surnamefamily", "familialname"
   ],
   preferredName: [
-    "preferredName",
-    "nickname",
-    "display_name",
-    "alias",
-    "second_name",
-    "preferred_name",
+    "preferredname", "nickname", "chosenname", "pseudonym", "callsign", "displayname", "usualname", "namepreferred", "informalname", "familiarname"
   ],
   dob: [
-    "dob",
-    "birthDate",
-    "birth_date",
-    "dateOfBirth",
-    "date_of_birth",
-    "birthday",
-    "participant_birthday",
-    "child_dob",
-    "birthday",
-    "birth",
-    "date",
+    "dateofbirth", "birthdate", "dob", "birthday", "birth", "dateborn", "whenborn", "yob", "birthyear", "birthmonthday"
   ],
   gender: [
-    "gender",
-    "sex",
-    "gender_identity",
-    "participant_gender",
-    "child_gender",
-    "user_gender",
-    "user_sex",
-    "child_sex",
-    "participant_sex",
+    "gender", "sex", "identity", "malefemale", "gendertype", "genderidentity", "biologicalsex", "assignedsex", "yourgender", "genderoption"
   ],
   nationality: [
-    "nationality",
-    "citizenship",
-    "country_of_origin",
-    "visa_status",
-    "origin",
-    "birth_place",
-    "country_of_birth",
+    "nationality", "country", "citizenship", "nation", "countryofcitizenship", "nationalorigin", "placeofbirthcountry", "yournationality", "nationalstatus", "countryname"
   ],
-  email: ["email", "emailaddress", "useremail", "emailid", "email_id"],
+  email: [
+    "email", "emailaddress", "e-mail", "eaddress", "mail", "youremail", "emailid", "electronicmail", "internetemail", "emailaddr"
+  ],
   phone: [
-    "homephone",
-    "phone",
-    "phonenumber",
-    "contactnumber",
-    "mobile",
-    "cell",
-    "number",
-    "workphone",
-    "personalphone",
+    "phone", "phonenumber", "telephone", "tel", "contactnumber", "mobilenumber", "cellphone", "homephone", "workphone", "numberphone"
   ],
-
   address: [
-    "address",
-    "street",
-    "street_address",
-    "residence_address",
-    "residence",
-    "home",
-    "home_address",
+    "address", "streetaddress", "mailingaddress", "addressline1", "address1", "addr", "residentialaddress", "permanentaddress", "homeaddress", "postaladdress"
   ],
-  city: ["city", "town", "municipality"],
-  state: ["state", "province", "region"],
-  zip: ["zip", "postalCode", "postal_code", "zipcode", "zip_code", "code"],
-  country: ["country", "nation", "country_name", "counteryName"],
+  city: [
+    "city", "town", "municipality", "urbanarea", "cityname", "place", "locationcity", "residentcity", "yourcity", "namecity"
+  ],
+  state: [
+    "state", "province", "region", "statename", "usstate", "stateprovince", "administrativearea", "locationstate", "yourstate", "stateabbreviation"
+  ],
+  zip: [
+    "zip", "zipcode", "postalcode", "zip code", "postal code", "zippostalcode", "areacode", "postalzip", "zipnumber"
+  ],
+  country: [
+    "country", "countryname", "nationalitycountry", "countryofresidence", "placeofbirthcountry", "yourcountry", "nation", "countrycode", "countryofcitizenship", "selectcountry"
+  ],
 
-  username: ["username", "user", "login", "user_id", "userid"],
-  password: ["password", "pass", "pwd", "passcode", "secret"],
+  username: [
+    "username", "userid", "login", "accountname", "screenname", "userlogin", "nameuser", "yourusername", "logonid", "memberid"
+  ],
+  password: [
+    "password", "pwd", "pass", "passwordfield", "yourpassword", "loginpassword", "accountpassword", "enterpassword", "userpassword", "securitycode"
+  ],
 
-  ccNumber: ["cc-number", "credit_card_number", "card_number", "ccn"],
-  ccExpiry: ["cc-expiry", "credit_card_expiry", "expiration_date", "exp_date"],
-  ccCvv: ["cc-cvv", "cvv", "card_cvv", "security_code"],
+  ccNumber: [
+    "ccnumber", "creditcardnumber", "cardnumber", "creditcardno", "ccno", "paymentcardnumber", "creditcard#", "cardno", "numbercreditcard", "creditcardaccountnumber"
+  ],
+  ccExpiry: [
+    "ccexpiry", "creditcardexpiry", "cardexpiry", "expirydate", "expirationdate", "ccexpiration", "validuntil", "expiredate", "ccvaliduntil", "cardexpirationdate"
+  ],
+  ccCvv: [
+    "cccvv", "cvv", "securitycode", "cardverificationvalue", "cvn", "cardsecuritycode", "ccsecuritycode", "cvvcode", "securitynumber", "cardcode"
+  ],
 
   notes: [
     "notes",
