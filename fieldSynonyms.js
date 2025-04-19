@@ -9,19 +9,19 @@ const fieldSynonyms = {
     "lastname", "surname", "familyname", "last", "lname", "namelast", "secondname", "surnamefamily", "familialname"
   ],
   preferredName: [
-    "preferredname", "nickname", "chosenname", "pseudonym", "callsign", "displayname", "usualname", "namepreferred", "informalname", "familiarname"
+    "preferredname", "preferredfirst", "preferredfirstname", "nickname", "chosenname", "pseudonym", "callsign", "displayname", "usualname", "namepreferred", "informalname", "familiarname"
   ],
   dob: [
     "dateofbirth", "birthdate", "dob", "birthday", "birth", "dateborn", "whenborn", "yob", "birthyear", "birthmonthday"
   ],
   gender: [
-    "gender", "sex", "identity", "malefemale", "gendertype", "genderidentity", "biologicalsex", "assignedsex", "yourgender", "genderoption"
+    "gender", "sex", "identity", "malefemale", "gendertype", "genderidentity", "biologicalsex", "assignedsex", "yourgender", "genderoption", "participant gender", "user gender", "gender identity", "biological sex"
   ],
   nationality: [
     "nationality", "country", "citizenship", "nation", "countryofcitizenship", "nationalorigin", "placeofbirthcountry", "yournationality", "nationalstatus", "countryname"
   ],
   email: [
-    "email", "emailaddress", "e-mail", "eaddress", "mail", "youremail", "emailid", "electronicmail", "internetemail", "emailaddr"
+    "email", "emailaddress", "e-mail", "eaddress", "mail", "youremail", "emailid", "electronicmail", "internetemail", "emailaddr", "email address", "e-mail", "user email", "email id", "email", "email address", "user email", "email id", "e-mail", "login email"
   ],
   phone: [
     "phone", "phonenumber", "telephone", "tel", "contactnumber", "mobilenumber", "cellphone", "homephone", "workphone", "numberphone"
@@ -46,7 +46,7 @@ const fieldSynonyms = {
     "username", "userid", "login", "accountname", "screenname", "userlogin", "nameuser", "yourusername", "logonid", "memberid"
   ],
   password: [
-    "password", "pwd", "pass", "passwordfield", "yourpassword", "loginpassword", "accountpassword", "enterpassword", "userpassword", "securitycode"
+    "password", "pwd", "pass", "passwordfield", "yourpassword", "loginpassword", "accountpassword", "enterpassword", "userpassword", "securitycode", "password", "pass", "login password", "account password", "user password"
   ],
 
   ccNumber: [

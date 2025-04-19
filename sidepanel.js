@@ -34,6 +34,7 @@ let createClickOne = false;
 const fname = document.getElementById("fname");
 const mname = document.getElementById("mname");
 const lname = document.getElementById("lname");
+const preferredName = document.getElementById("preferredName");
 const email = document.getElementById("email");
 const phone = document.getElementById("phone");
 const dob = document.getElementById("dob");
@@ -43,6 +44,7 @@ const city = document.getElementById("city");
 const state = document.getElementById("state");
 const zip = document.getElementById("zip");
 const country = document.getElementById("country");
+const nationality = document.getElementById("nationality");
 const username = document.getElementById("username");
 const password = document.getElementById("password");
 const notes = document.getElementById("notes");
@@ -127,22 +129,24 @@ saveButton.addEventListener("click", function () {
   }
 
   const data = {
-      fname: fname.value,
-      mname: mname.value,
-      lname: lname.value,
-      email: email.value,
-      phone: phone.value,
-      dob: dob.value,
-      gender: gender.value,
-      address: address.value,
-      city: city.value,
-      state: state.value,
-      zip: zip.value,
-      country: country.value,
-      username: username.value,
-      password: password.value,
-      notes: notes.value
-  };
+    fname: fname.value,
+    mname: mname.value,
+    lname: lname.value,
+    preferredName: preferredName.value,
+    dob: dob.value,
+    gender: gender.value,
+    nationality: nationality.value,
+    email: email.value,
+    phone: phone.value,
+    address: address.value,
+    city: city.value,
+    state: state.value,
+    zip: zip.value,
+    country: country.value,
+    username: username.value,
+    password: password.value,
+    notes: notes.value
+};
 
   // Use existing key if editing, otherwise create a new one
   let key = editingProfileKey ? editingProfileKey : data.fname + data.lname;
@@ -205,6 +209,7 @@ editProfileButton.addEventListener("click", function () {
         fname.value = profileData.fname || "";
         mname.value = profileData.mname || "";
         lname.value = profileData.lname || "";
+        preferredName.value = profileData.preferredName || "";
         email.value = profileData.email || "";
         phone.value = profileData.phone || "";
         dob.value = profileData.dob || "";
@@ -212,9 +217,12 @@ editProfileButton.addEventListener("click", function () {
         address.value = profileData.address || "";
         city.value = profileData.city || "";
         state.value = profileData.state || "";
+        zip.value = profileData.zip || "";
         country.value = profileData.country || "";
+        nationality.value = profileData.nationality || "";
         username.value = profileData.username || "";
         notes.value = profileData.notes || "";
+        password.value = profileData.password || "";
 
         // Show the form
         document.getElementById("fill-form-page").style.display = "flex";
