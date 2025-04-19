@@ -13,23 +13,35 @@ function autofillForm(key) {
 
     getProfile(key)
     .then(function(userProfile) {
-        let keys = Object.keys(userProfile);
-        let values = Object.values(userProfile);
-        
-        // fill in input text fields, swap out textarea for other input types
-        let textInputs = document.querySelectorAll("input:not([type='hidden']), textarea");
-        textInputs.forEach(input => {
-            const match = findBestKeyMatch(input, fieldSynonyms, .6);
-            if (match) {
-              input.value = userProfile[match.key];
+      let inputs = document.querySelectorAll(
+        "input[type='text']:not([type='hidden']), " +
+        "select:not([style*='display: none']):not([style*='visibility: hidden']), " +
+        "input[type='date']:not([style*='display: none']):not([style*='visibility: hidden'])"
+      );
+        inputs.forEach(input => {
+          // const prevSibling = input.previousElementSibling;
+          // if (prevSibling) {
+          //   // console.log(input.previousElementSibling.textContent.trim());
+          // }
+          const match = findBestKeyMatch(input, fieldSynonyms, .6);
+          if (match) {
+            input.value = userProfile[match.key];
+            console.log("Matched: ", input.name, "with ", match.key, " ", match.score);
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+          } else {
+            // contextual matching
+            const contextual_match = findContextualMatch(input, fieldSynonyms, .5);
+            if (contextual_match) {
+              input.value = userProfile[contextual_match.key];
+              console.log("Matched: ", input.name, "with ", contextual_match.key, " ", contextual_match.score);
+              input.dispatchEvent(new Event("input", { bubbles: true }));
+              input.dispatchEvent(new Event("change", { bubbles: true }));
             } else {
               console.log(input.tagName, input.type, "No good match found (below threshold) for:", input.name || input.id);
             }
-
-            input.dispatchEvent(new Event("input", { bubbles: true }));
-            input.dispatchEvent(new Event("change", { bubbles: true }));
+          }
         });
-
         console.log("autofill complete :)");
     })
     .catch(function(error) {
@@ -49,13 +61,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 function findBestKeyMatch(formElement, fieldSynonyms, threshold = 0.6) { 
   let bestMatch = null;
   let highestSimilarity = 0;
-
+  
   const identifiers = {
     'label': getLabelText(formElement)?.toLowerCase().replace(/[^a-z]/g, '') || '',
     'ariaLabel': formElement.getAttribute('aria-label')?.toLowerCase().replace(/[^a-z]/g, '') || '',
-    'name': formElement.name?.toLowerCase().replace(/[^a-z]/g, '') || '',
-    'id': formElement.id?.toLowerCase().replace(/[^a-z]/g, '') || '',
     'placeholder': formElement.placeholder?.toLowerCase().replace(/[^a-z]/g, '') || '',
+    'id': formElement.id?.toLowerCase().replace(/[^a-z]/g, '') || '',
+    'name': formElement.name?.toLowerCase().replace(/[^a-z]/g, '') || '',
     'title': formElement.title?.toLowerCase().replace(/[^a-z]/g, '') || ''
   };
 
@@ -80,5 +92,62 @@ function findBestKeyMatch(formElement, fieldSynonyms, threshold = 0.6) {
 
 function getLabelText(element) {
   const label = document.querySelector(`label[for="${element.id}"]`);
-  return label ? label.textContent.trim() : null;
+  if (label) {
+    // console.log("LABEL CONTENT", label.textContent);
+    return label.textContent.trim();
+  } else {
+    return null;
+  }
+}
+
+function findContextualMatch(formElement, fieldSynonyms, threshold = 0.6) {
+  let bestMatch = null;
+  let highestSimilarity = 0;
+
+  function cleanAndMatch(text, keys, source) {
+    if (!text) return null;
+    const cleanedText = text.toLowerCase().replace(/[^a-z]/g, '') || '';
+    if (!cleanedText) return null;
+
+    const matches = findBestMatch(cleanedText, Object.keys(keys));
+    if (matches.bestMatch.rating >= threshold) {
+      return {
+        key: matches.bestMatch.target,
+        score: matches.bestMatch.rating,
+        source: source,
+        matchedTerm: matches.bestMatch.target
+      };
+    }
+    return null;
+  }
+
+  // check previous sibling
+  // sometimes it takes in a div, so filter so you only get label texts
+  if (formElement.previousElementSibling) {
+    const prevSiblingText = formElement.previousElementSibling.textContent.trim();
+    const match = cleanAndMatch(prevSiblingText, fieldSynonyms, "previousSibling");
+    // console.log(formElement.name);
+    // console.log(prevSiblingText);
+    if (match) {
+      bestMatch = match;
+      highestSimilarity = match.score;
+    }
+  }
+
+  // check parent (this might not be accurate)
+    const parentText = formElement.parentNode
+    ? Array.from(formElement.parentNode.childNodes)
+          .filter(node => node.nodeType === Node.TEXT_NODE)
+          .map(node => node.textContent.trim())
+          .join(" ")
+    : "";
+
+  if (parentText) {
+      const match = cleanAndMatch(parentText, fieldSynonyms, "parentNode");
+        if (match && match.score > highestSimilarity) {
+            bestMatch = match;
+        }
+  }
+
+  return bestMatch;
 }

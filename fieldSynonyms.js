@@ -41,7 +41,7 @@ const fieldSynonyms = {
   country: [
     "country", "countryname", "nationalitycountry", "countryofresidence", "placeofbirthcountry", "yourcountry", "nation", "countrycode", "countryofcitizenship", "selectcountry"
   ],
-
+// remove?
   username: [
     "username", "userid", "login", "accountname", "screenname", "userlogin", "nameuser", "yourusername", "logonid", "memberid"
   ],

@@ -41,8 +41,10 @@ const gender = document.getElementById("gender");
 const address = document.getElementById("address");
 const city = document.getElementById("city");
 const state = document.getElementById("state");
+const zip = document.getElementById("zip");
 const country = document.getElementById("country");
 const username = document.getElementById("username");
+const password = document.getElementById("password");
 const notes = document.getElementById("notes");
 
 const saveButton = document.getElementById("save-data");
@@ -103,7 +105,7 @@ saveButton.addEventListener("click", function () {
 
   showProfilesFunction();
 });
-*/
+*/  
 
 // Save or Update Profile
 saveButton.addEventListener("click", function () {
@@ -135,8 +137,10 @@ saveButton.addEventListener("click", function () {
       address: address.value,
       city: city.value,
       state: state.value,
+      zip: zip.value,
       country: country.value,
       username: username.value,
+      password: password.value,
       notes: notes.value
   };
 
