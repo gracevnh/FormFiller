@@ -71,7 +71,7 @@ function autofillForm(key) {
         );
 
         inputs.forEach(input => {
-          const match = findBestKeyMatch(input, fieldSynonyms, .75);
+          const match = findBestKeyMatch(input, fieldSynonyms, .6);
           if (match) {
 
             // added in case of drop down menus
@@ -229,6 +229,7 @@ function findBestKeyMatch(formElement, fieldSynonyms, threshold = 0.6) {
 
   const identifiers = {
     label: getLabelText(formElement) || '',
+    tags: getAllTags(formElement) || '',
     ariaLabel: formElement.getAttribute('aria-label') || '',
     placeholder: formElement.placeholder || '',
     id: formElement.id || '',
@@ -278,6 +279,9 @@ function findBestKeyMatch(formElement, fieldSynonyms, threshold = 0.6) {
       const aliases = fieldSynonyms[primaryKey];
       const allTermsToMatch = [primaryKey, ...aliases];
       const matches = findBestMatch(identifier, allTermsToMatch);
+
+      //debug
+      console.log("source:", source, " ", identifier, "score: ", matches.bestMatch.rating, "target: ", matches.bestMatch.target);
 
       if (matches.bestMatch.rating > highestSimilarity && matches.bestMatch.rating >= threshold) {
         highestSimilarity = matches.bestMatch.rating;
@@ -383,6 +387,33 @@ function findBestKeyMatch(formElement, fieldSynonyms, threshold = 0.6) {
 // }
 
 function getLabelText(element) {
+  // label with "for"
+  let label = document.querySelector(`label[for="${element.id}"]`);
+  if (label) {
+    return label.textContent.replace(/\(.*?\)/g, "").trim().toLowerCase();
+  }
+
+  // closest parent with a label
+  let current = element;
+  for (let i = 0; i < 4 && current.parentElement; i++) {
+    const maybeLabel = current.parentElement.querySelector("label");
+    if (maybeLabel) {
+      return maybeLabel.textContent.replace(/\(.*?\)/g, "").trim().toLowerCase();
+    }
+    current = current.parentElement;
+  }
+
+  // aria-label or placeholder directly
+  return (
+    element.getAttribute("aria-label")?.trim().toLowerCase() ||
+    element.placeholder?.trim().toLowerCase() ||
+    element.name?.trim().toLowerCase() ||
+    null
+  );
+}
+
+
+function getAllTags(element) {
   let labels = [];
 
   // check for label[for=element.id]
@@ -429,7 +460,7 @@ function getLabelText(element) {
     .replace(/[^a-z]/g, "");      // strip all non-letters
 
   // debug
-  console.log(`[getLabelText()] Combined label for input "${element.name || element.id}":`, combined);
+  console.log(`[getAllTags()] Combined label for input "${element.name || element.id}":`, combined);
 
   return combined || null;
 }
