@@ -20,6 +20,21 @@ class Profile {
     get email() {
         return this.data.email;
     }
+
+    // new fields
+    get studentID() { return this.data.studentID; }
+    get grade() { return this.data.grade; }
+    get graduation() { return this.data.graduation; }
+    get ethnicity() { return this.data.ethnicity; }
+    get insuranceCompany() { return this.data.insuranceCompany; }
+    get insuranceNumber() { return this.data.insuranceNumber; }
+    get physicianName() { return this.data.physicianName; }
+    get physicianPhone() { return this.data.physicianPhone; }
+    // seperate obj for emergency contact
+    get emergencyContactFirst() { return this.data.emergencyContact?.first || ""; }
+    get emergencyContactLast() { return this.data.emergencyContact?.last || ""; }
+    get emergencyContactPhone() { return this.data.emergencyContact?.phone || ""; }
+    get emergencyRelationship() { return this.data.emergencyContact?.relationship || ""; }
 }
 
 // Track which profile is being edited
@@ -48,66 +63,23 @@ const nationality = document.getElementById("nationality");
 const username = document.getElementById("username");
 const password = document.getElementById("password");
 const notes = document.getElementById("notes");
+// new fields
+const studentID = document.getElementById("studentID");
+const grade = document.getElementById("grade");
+const graduation = document.getElementById("graduation");
+const ethnicity = document.getElementById("ethnicity");
+const insuranceCompany = document.getElementById("insuranceCompany");
+const insuranceNumber = document.getElementById("insuranceNumber");
+const physicianName = document.getElementById("physicianName");
+const physicianPhone = document.getElementById("physicianPhone");
+const emergencyContactFirst = document.getElementById("emergencyContactFirst");
+const emergencyContactLast = document.getElementById("emergencyContactLast");
+const emergencyContactPhone = document.getElementById("emergencyContactPhone");
+const emergencyRelationship = document.getElementById("emergencyRelationship");
 
 const saveButton = document.getElementById("save-data");
 const editProfileButton = document.getElementById("edit-profile");
 const deleteProfileButton = document.getElementById("delete-profile");
-
-/*
-saveButton.addEventListener("click", function () {
-  const data = {};
-
-  if (!fname.value.trim()) {
-    alert("First Name is required.");
-    return;
-  }
-  if (!lname.value.trim()) {
-    alert("Last Name is required.");
-    return;
-  }
-  if (!email.value.trim()) {
-    alert("Email is required.");
-    return;
-  }
-  if (!email.value.includes("@")) {
-    alert("Please enter a valid email address.");
-    return;
-  }
-  if (!phone.value.trim()) {
-    alert("Phone Number is required.");
-    return;
-  }
-  if (!/^\d+$/.test(phone.value)) {
-    alert("Phone Number must contain only digits.");
-    return;
-  }
-
-  data.fname = fname.value;
-  data.lname = lname.value;
-  data.email = email.value;
-  data.phone = phone.value;
-  data.dob = dob.value;
-  data.mname = mname.value;
-  data.gender = gender.value;
-  data.address = address.value;
-  data.city = city.value;
-  data.state = state.value;
-  data.country = country.value;
-  data.username = username.value;
-  data.notes = notes.value;
-
-  // Saving every user in the database as their full name
-  let key = data.fname + data.lname;
-
-  // Store data in chrome.storage.local with the unique key
-  chrome.storage.local.set({ [key]: data }, function () {
-      console.log("Data saved:", key, data);
-      alert("Form submitted successfully!");
-  })
-
-  showProfilesFunction();
-});
-*/  
 
 // Save or Update Profile
 saveButton.addEventListener("click", function () {
@@ -145,7 +117,24 @@ saveButton.addEventListener("click", function () {
     country: country.value,
     username: username.value,
     password: password.value,
-    notes: notes.value
+    notes: notes.value,
+    // new fields
+    studentID: studentID.value,
+    grade: grade.value,
+    graduation: graduation.value,
+    ethnicity: ethnicity.value,
+    insuranceCompany: insuranceCompany.value,
+    insuranceNumber: insuranceNumber.value,
+    physicianName: physicianName.value,
+    physicianPhone: physicianPhone.value,
+    // seperate obj for emergency contact 
+    emergencyContact: {
+      first: emergencyContactFirst.value,
+      last: emergencyContactLast.value,
+      phone: emergencyContactPhone.value,
+      relationship: emergencyRelationship.value
+    }
+    
 };
 
   // Use existing key if editing, otherwise create a new one
@@ -223,6 +212,19 @@ editProfileButton.addEventListener("click", function () {
         username.value = profileData.username || "";
         notes.value = profileData.notes || "";
         password.value = profileData.password || "";
+        // new fields
+        studentID.value = profileData.studentID || "";
+        grade.value = profileData.grade || "";
+        graduation.value = profileData.graduation || "";
+        ethnicity.value = profileData.ethnicity || "";
+        insuranceCompany.value = profileData.insuranceCompany || "";
+        insuranceNumber.value = profileData.insuranceNumber || "";
+        physicianName.value = profileData.physicianName || "";
+        physicianPhone.value = profileData.physicianPhone || "";
+        emergencyContactFirst.value = profileData.emergencyContact?.first || "";
+        emergencyContactLast.value = profileData.emergencyContact?.last || "";
+        emergencyContactPhone.value = profileData.emergencyContact?.phone || "";
+        emergencyRelationship.value = profileData.emergencyContact?.relationship || "";
 
         // Show the form
         document.getElementById("fill-form-page").style.display = "flex";
@@ -263,45 +265,6 @@ deleteProfileButton.addEventListener("click", function () {
   }
 });
 
-/*
-// Create Account Button (Show Form)
-document.getElementById("create-account").addEventListener("click", function () {
-  const fillFormPage = document.getElementById("fill-form-page");
-
-  if (!fillFormPage) {
-      console.error("Error: 'fill-form-page' not found.");
-      return;
-  }
-
-  // Toggle visibility
-  if (fillFormPage.style.display === "none" || fillFormPage.style.display === "") {
-      fillFormPage.style.display = "flex";
-  } else {
-      fillFormPage.style.display = "none";
-  }
-
-  // Reset form fields for a new profile
-  fname.value = "";
-  mname.value = "";
-  lname.value = "";
-  email.value = "";
-  phone.value = "";
-  dob.value = "";
-  gender.value = "";
-  address.value = "";
-  city.value = "";
-  state.value = "";
-  country.value = "";
-  username.value = "";
-  notes.value = "";
-
-  // Reset editing mode to ensure we're creating a new profile
-  editingProfileKey = null;
-
-  console.log("Create Account button clicked, form is now visible.");
-});
-*/
-
 // Event listener for "Create Account" button
 const createAccountButton = document.getElementById("create-account");
 
@@ -337,6 +300,19 @@ createAccountButton.addEventListener("click", function () {
       country.value = "";
       username.value = "";
       notes.value = "";
+      // new fields 
+      studentID.value = "";
+      grade.value = "";
+      graduation.value = "";
+      ethnicity.value = "";
+      insuranceCompany.value = "";
+      insuranceNumber.value = "";
+      physicianName.value = "";
+      physicianPhone.value = "";
+      emergencyContactFirst.value = "";
+      emergencyContactLast.value = "";
+      emergencyContactPhone.value = "";
+      emergencyRelationship.value = "";
     }
     document.getElementById("fill-form-page").style.display = "flex";
     fillFormOpen = true;
@@ -350,15 +326,6 @@ createAccountButton.addEventListener("click", function () {
       editClikeOne = false;
     }
   }
-
-  /*
-  // Toggle visibility of the form
-  if (fillFormPage.style.display === "none" || fillFormPage.style.display === "") {
-    fillFormPage.style.display = "flex";  // Show the form
-  } else {
-    fillFormPage.style.display = "none";  // Hide the form (completely removes from the layout)
-  }
-  */
 
   console.log("Form Closed - Updated States:");
   console.log("editClickOne:", editClickOne);
@@ -439,24 +406,6 @@ fillFormButton.addEventListener("click", function () {
     });
   
 });
-
-/*
-function showProfilesFunction() {
-  const showProfiles = document.getElementById("show-profiles");
-  const selectElement = showProfiles.querySelector("select");
-  selectElement.innerHTML = ""; // Clear existing options
-
-  chrome.storage.local.get(null, function (profiles) {
-      for (let key in profiles) {
-          const profile = new Profile(profiles[key]);
-          const option = document.createElement("option");
-          option.value = key;
-          option.text = profile.fullname;
-          selectElement.add(option);
-      }
-  });
-}
-*/
 
 // Show Profiles in Dropdown
 function showProfilesFunction() {
