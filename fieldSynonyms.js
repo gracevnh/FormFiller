@@ -18,7 +18,7 @@ const fieldSynonyms = {
     "gender", "sex", "malefemale", "gendertype", "genderidentity", "biologicalsex", "assignedsex", "yourgender", "genderoption", "participant gender", "user gender", "gender identity", "biological sex", "person[sex]"
   ],
   nationality: [
-    "nationality", "country", "citizenship", "nation", "countryofcitizenship", "nationalorigin", "placeofbirthcountry", "yournationality", "nationalstatus", "countryname"
+    "nationality", "citizenship", "nation", "countryofcitizenship", "nationalorigin", "placeofbirthcountry", "yournationality", "nationalstatus", "countryname"
   ],
   // email: [
   //   "email", "emailaddress", "e-mail", "eaddress", "mail", "youremail", "emailid", "electronicmail", "internetemail", "emailaddr", "email address", "e-mail", "user email", "email id", "email", "email address", "user email", "email id", "e-mail", "login email"

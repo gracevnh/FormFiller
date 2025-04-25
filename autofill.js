@@ -127,7 +127,7 @@ function autofillForm(key) {
             }            
 
             if (input.tagName === "SELECT") {
-              console.log("sensed a select")
+              // console.log("sensed a select")
               const normalizedMatchedValue = matchedValue?.toLowerCase().trim();
 
               // better matching for drop down gender menu
@@ -146,12 +146,12 @@ function autofillForm(key) {
               );
 
               if (matchedOption) {
-                console.log(`[AUTOFILL MATCH] 
-                  Input Name: ${input.name || input.id} 
-                  Matched Key: ${match.key} 
-                  Matched Value: ${matchedValue} 
-                  Source: ${match.source} 
-                  Score: ${match.score}`);                  
+                // console.log(`[AUTOFILL MATCH] 
+                //   Input Name: ${input.name || input.id} 
+                //   Matched Key: ${match.key} 
+                //   Matched Value: ${matchedValue} 
+                //   Source: ${match.source} 
+                //   Score: ${match.score}`);                  
 
                 input.value = matchedOption.value;
                 input.dispatchEvent(new Event("change", { bubbles: true }));
@@ -166,8 +166,7 @@ function autofillForm(key) {
             }
 
             // end of added 
-
-            console.log("Matched: ", input.name, "with ", match.key, " ", match.score);
+            // console.log("Matched: ", input.name, "with ", match.key, " ", match.score);
             input.dispatchEvent(new Event("input", { bubbles: true }));
             input.dispatchEvent(new Event("change", { bubbles: true }));
           } else {
@@ -192,11 +191,11 @@ function autofillForm(key) {
               }              
             
               input.value = matchedValue || "";
-              console.log("Matched (contextual): ", input.name, "with ", contextual_match.key, " ", contextual_match.score);
+              // console.log("Matched (contextual): ", input.name, "with ", contextual_match.key, " ", contextual_match.score);
               input.dispatchEvent(new Event("input", { bubbles: true }));
               input.dispatchEvent(new Event("change", { bubbles: true }));
             } else {
-              console.log(input.tagName, input.type, "No good match found (below threshold) for:", input.name || input.id);
+              // console.log(input.tagName, input.type, "No good match found (below threshold) for:", input.name || input.id);
             }
             
           }
@@ -281,7 +280,7 @@ function findBestKeyMatch(formElement, fieldSynonyms, threshold = 0.6) {
       const matches = findBestMatch(identifier, allTermsToMatch);
 
       //debug
-      console.log("source:", source, " ", identifier, "score: ", matches.bestMatch.rating, "target: ", matches.bestMatch.target);
+      // console.log("source:", source, " ", identifier, "score: ", matches.bestMatch.rating, "target: ", matches.bestMatch.target);
 
       if (matches.bestMatch.rating > highestSimilarity && matches.bestMatch.rating >= threshold) {
         highestSimilarity = matches.bestMatch.rating;
@@ -460,7 +459,7 @@ function getAllTags(element) {
     .replace(/[^a-z]/g, "");      // strip all non-letters
 
   // debug
-  console.log(`[getAllTags()] Combined label for input "${element.name || element.id}":`, combined);
+  // console.log(`[getAllTags()] Combined label for input "${element.name || element.id}":`, combined);
 
   return combined || null;
 }
