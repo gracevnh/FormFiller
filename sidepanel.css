@@ -76,15 +76,15 @@ button {
 select {
   width: 100%;
   padding: 8px;
-  margin-bottom: 12px; 
-  border: 1px solid #ccc; 
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 14px; 
-  background-color: white; 
-  cursor: pointer; 
-  appearance: none; 
-  -webkit-appearance: none; 
-  -moz-appearance: none; 
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 select::-ms-expand {
@@ -97,21 +97,23 @@ select:focus {
 }
 
 hr {
-  border: none; 
+  border: none;
   height: 1px;
-  background-color: #ccc; 
-  margin: 10px 0; 
-  width: 100%; 
+  background-color: #ccc;
+  margin: 10px 0;
+  width: 100%;
 }
 
 #fill-form-page {
-  display: none;  /* Initially hidden */
+  display: none;
+  /* Initially hidden */
   width: 100%;
   flex-direction: column;
 }
 
 #tutorial-info {
-  display: none;  /* Initially hidden */
+  display: none;
+  /* Initially hidden */
   width: 100%;
   flex-direction: column;
 }

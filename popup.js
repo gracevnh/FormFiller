@@ -22,12 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
       target: { tabId: currentTab.id },
       function: extractFieldTitles,
     })
-    .then(() => {
-      console.log("Script executed successfully!");
-    })
-    .catch((error) => {
-      console.error("Script execution failed:", error);
-    });
+      .then(() => {
+        console.log("Script executed successfully!");
+      })
+      .catch((error) => {
+        console.error("Script execution failed:", error);
+      });
   });
 
   // Function to extract and print field titles to the console

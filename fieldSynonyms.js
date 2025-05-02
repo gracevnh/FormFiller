@@ -20,13 +20,9 @@ const fieldSynonyms = {
   nationality: [
     "nationality", "citizenship", "nation", "countryofcitizenship", "nationalorigin", "placeofbirthcountry", "yournationality", "nationalstatus", "countryname"
   ],
-  // email: [
-  //   "email", "emailaddress", "e-mail", "eaddress", "mail", "youremail", "emailid", "electronicmail", "internetemail", "emailaddr", "email address", "e-mail", "user email", "email id", "email", "email address", "user email", "email id", "e-mail", "login email"
-  // ],
   email: [
     "email", "emailaddress", "e-mail", "mail", "youremail", "useremail", "contactemail", "parentemail"
   ],
-  
   studentEmail: [
     "studentemail", "participantemail", "emailstudent", "person[username]", "student email"
   ],
@@ -93,7 +89,6 @@ const fieldSynonyms = {
   emergencyRelationship: [
     "relationship", "emergencyrelationship", "relationtoparticipant", "contactrelation", "ecrelationship", "relationshiptype"
   ],
-
 
   notes: [
     "notes",

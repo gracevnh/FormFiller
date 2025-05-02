@@ -1,173 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FormFiller</title>
-    <link rel="stylesheet" href="sidepanel.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h2 class="title">FormFiller.</h2>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FormFiller</title>
+  <link rel="stylesheet" href="sidepanel.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h2 class="title">FormFiller.</h2>
+    <hr>
+
+    <h3 style="text-align: center; width: 100%;">Select User</h3>
+
+    <div id="show-profiles">
+      <select>
+        <option value="">Select Profile</option>
+      </select>
+    </div> <br>
+
+    <form id="input-form">
+      <button id="fill-form" type="button"> FILL FORM</button> <br>
+      <button id="edit-profile" type="button">EDIT ACCOUNT</button> <br>
+      <button id="create-account" type="button">CREATE ACCOUNT</button> <br>
+      <button id="delete-profile" type="button">DELETE ACCOUNT</button> <br>
+      <button id="tutorial" type="button">TUTORIAL</button> <br>
+
+      <div id="fill-form-page">
+        <hr>
+
+        <h3 style="text-align: center; width: 100%;">Personal</h3>
+
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" placeholder="Enter your first name" />
+
+        <label for="mname">Middle Name</label>
+        <input type="text" id="mname" placeholder="Enter your middle name (optional)" />
+
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" placeholder="Enter your last name" />
+
+        <label for="nickname">Preferred Name</label>
+        <input type="text" id="preferredName" placeholder="Enter your preferred name (optional)" />
+
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" />
+
+        <label for="gender">Gender</label>
+        <select id="gender">
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="nationality">Nationality</label>
+        <input type="text" id="nationality" placeholder="Enter your nationality" />
+
+        <label for="email">Email</label>
+        <input type="text" id="email" placeholder="Enter your email" />
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" placeholder="Enter your phone number" />
+
+        <hr>
+        <h3 style="text-align: center; width: 100%;">Address</h3>
+
+        <label for="address">Street Address</label>
+        <input type="text" id="address" placeholder="Enter your address" />
+
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Enter your city" />
+
+        <label for="state">State/Province</label>
+        <input type="text" id="state" placeholder="Enter your state" />
+
+        <label for="zip">ZIP/Postal Code</label>
+        <input type="text" id="zip" placeholder="Enter your ZIP code" />
+
+        <label for="country">Country</label>
+        <input type="text" id="country" placeholder="Enter your country" />
+
+        <hr>
+        <h3 style="text-align: center; width: 100%;">Login Information</h3>
+
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter your username" />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" />
+
+        <hr>
+        <h3 style="text-align: center; width: 100%;">Student Details</h3>
+
+        <label for="studentID">Student ID</label>
+        <input type="text" id="studentID" placeholder="Enter your student ID" />
+
+        <label for="grade">Grade</label>
+        <input type="text" id="grade" placeholder="Enter your current grade" />
+
+        <label for="graduation">Graduation Year</label>
+        <input type="text" id="graduation" placeholder="Enter your expected graduation year" />
+
+        <label for="ethnicity">Ethnicity</label>
+        <input type="text" id="ethnicity" placeholder="Enter your ethnicity" />
+
+        <hr>
+        <h3 style="text-align: center; width: 100%;">Medical Information</h3>
+
+        <label for="insuranceCompany">Insurance Company</label>
+        <input type="text" id="insuranceCompany" placeholder="Enter insurance company" />
+
+        <label for="insuranceNumber">Insurance Account Number</label>
+        <input type="text" id="insuranceNumber" placeholder="Enter insurance account number" />
+
+        <label for="physicianName">Physician's Name</label>
+        <input type="text" id="physicianName" placeholder="Enter physician's name" />
+
+        <label for="physicianPhone">Physician's Phone</label>
+        <input type="text" id="physicianPhone" placeholder="Enter physician's phone number" />
+
+        <hr>
+        <h3 style="text-align: center; width: 100%;">Emergency Contact</h3>
+
+        <label for="emergencyContactFirst">First Name</label>
+        <input type="text" id="emergencyContactFirst" placeholder="Enter emergency contact's first name" />
+
+        <label for="emergencyContactLast">Last Name</label>
+        <input type="text" id="emergencyContactLast" placeholder="Enter emergency contact's last name" />
+
+        <label for="emergencyContactPhone">Phone Number</label>
+        <input type="text" id="emergencyContactPhone" placeholder="Enter emergency contact's phone number" />
+
+        <label for="emergencyRelationship">Relationship</label>
+        <input type="text" id="emergencyRelationship" placeholder="Enter your relationship to the emergency contact" />
+
+        <h3 style="text-align: center; width: 100%;">Additional Info</h3>
+
+        <label for="notes">Notes</label>
+        <textarea id="notes" placeholder="Enter any additional notes"></textarea><br>
+
+        <button id="save-data" type="button">SUBMIT</button> <br>
+      </div>
+    </form>
+
+    <div id="tutorial-info">
       <hr>
 
-      <h3 style="text-align: center; width: 100%;">Select User</h3>
+      <h3 style="text-align: center; width: 100%;">Tutorial</h3>
 
-      <div id="show-profiles">
-        <select>
-          <option value="">Select Profile</option>
-        </select>
-      </div> <br>
-
-      <form id="input-form">
-        <button id="fill-form" type="button"> FILL FORM</button> <br> 
-        <button id="edit-profile" type="button">EDIT ACCOUNT</button> <br>
-        <button id="create-account" type="button">CREATE ACCOUNT</button> <br>
-        <button id="delete-profile" type="button">DELETE ACCOUNT</button> <br>
-        <button id="tutorial" type="button">TUTORIAL</button> <br>
-
-        <div id="fill-form-page">
-          <hr>
-
-          <h3 style="text-align: center; width: 100%;">Personal</h3>
-
-          <label for="fname">First Name</label>
-          <input type="text" id="fname" placeholder="Enter your first name" />
-
-          <label for="mname">Middle Name</label>
-          <input type="text" id="mname" placeholder="Enter your middle name (optional)" />
-
-          <label for="lname">Last Name</label>
-          <input type="text" id="lname" placeholder="Enter your last name" />
-
-          <label for="nickname">Preferred Name</label>
-          <input type="text" id="preferredName" placeholder="Enter your preferred name (optional)" />
-
-          <label for="dob">Date of Birth</label>
-          <input type="date" id="dob" />
-
-          <label for="gender">Gender</label>
-          <select id="gender">
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-
-          <label for="nationality">Nationality</label>
-          <input type="text" id="nationality" placeholder="Enter your nationality" />
-
-          <label for="email">Email</label>
-          <input type="text" id="email" placeholder="Enter your email" />
-          <label for="phone">Phone Number</label>
-          <input type="text" id="phone" placeholder="Enter your phone number" />
-
-          <hr>
-          <h3 style="text-align: center; width: 100%;">Address</h3>
-
-          <label for="address">Street Address</label>
-          <input type="text" id="address" placeholder="Enter your address" />
-
-          <label for="city">City</label>
-          <input type="text" id="city" placeholder="Enter your city" />
-
-          <label for="state">State/Province</label>
-          <input type="text" id="state" placeholder="Enter your state" />
-
-          <label for="zip">ZIP/Postal Code</label>
-          <input type="text" id="zip" placeholder="Enter your ZIP code" />
-
-          <label for="country">Country</label>
-          <input type="text" id="country" placeholder="Enter your country" />
-
-          <hr>
-          <h3 style="text-align: center; width: 100%;">Login Information</h3>
-
-          <label for="username">Username</label>
-          <input type="text" id="username" placeholder="Enter your username" />
-
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter your password" />
-
-          <hr>
-          <h3 style="text-align: center; width: 100%;">Student Details</h3>
-
-          <label for="studentID">Student ID</label>
-          <input type="text" id="studentID" placeholder="Enter your student ID" />
-
-          <label for="grade">Grade</label>
-          <input type="text" id="grade" placeholder="Enter your current grade" />
-
-          <label for="graduation">Graduation Year</label>
-          <input type="text" id="graduation" placeholder="Enter your expected graduation year" />
-
-          <label for="ethnicity">Ethnicity</label>
-          <input type="text" id="ethnicity" placeholder="Enter your ethnicity" />
-
-          <hr>
-          <h3 style="text-align: center; width: 100%;">Medical Information</h3>
-
-          <label for="insuranceCompany">Insurance Company</label>
-          <input type="text" id="insuranceCompany" placeholder="Enter insurance company" />
-
-          <label for="insuranceNumber">Insurance Account Number</label>
-          <input type="text" id="insuranceNumber" placeholder="Enter insurance account number" />
-
-          <label for="physicianName">Physician's Name</label>
-          <input type="text" id="physicianName" placeholder="Enter physician's name" />
-
-          <label for="physicianPhone">Physician's Phone</label>
-          <input type="text" id="physicianPhone" placeholder="Enter physician's phone number" />
-
-          <hr>
-          <h3 style="text-align: center; width: 100%;">Emergency Contact</h3>
-
-          <label for="emergencyContactFirst">First Name</label>
-          <input type="text" id="emergencyContactFirst" placeholder="Enter emergency contact's first name" />
-
-          <label for="emergencyContactLast">Last Name</label>
-          <input type="text" id="emergencyContactLast" placeholder="Enter emergency contact's last name" />
-
-          <label for="emergencyContactPhone">Phone Number</label>
-          <input type="text" id="emergencyContactPhone" placeholder="Enter emergency contact's phone number" />
-
-          <label for="emergencyRelationship">Relationship</label>
-          <input type="text" id="emergencyRelationship" placeholder="Enter your relationship to the emergency contact" />
-
-          <h3 style="text-align: center; width: 100%;">Additional Info</h3>
-
-          <label for="notes">Notes</label>
-          <textarea id="notes" placeholder="Enter any additional notes"></textarea><br>
-
-          <button id="save-data" type="button">SUBMIT</button> <br>
-        </div>
-      </form>
-
-      <div id="tutorial-info">
-        <hr>
-        
-        <h3 style="text-align: center; width: 100%;">Tutorial</h3>
-
-        <div>
-          <u>Filling in a Form</u>
-          <ol>
-            <li>Select a user</li>
-            <li>Click the "Fill Form" button</li>
-          </ol>
-        </div>
-
-        <div>
-          <u>Creating an Account</u>
-          <ol>
-            <li>Click the "Create Account" button</li>
-            <li>Enter information for a specific user</li>
-            <li>Click the "Submit" button when finished</li>
-          </ol>
-        </div>
+      <div>
+        <u>Filling in a Form</u>
+        <ol>
+          <li>Select a user</li>
+          <li>Click the "Fill Form" button</li>
+        </ol>
       </div>
 
+      <div>
+        <u>Creating an Account</u>
+        <ol>
+          <li>Click the "Create Account" button</li>
+          <li>Enter information for a specific user</li>
+          <li>Click the "Submit" button when finished</li>
+        </ol>
+      </div>
     </div>
-    <script src="autofill.js"></script>
-    <script src="sidepanel.js"></script>
-  </body>
+
+  </div>
+  <script src="autofill.js"></script>
+  <script src="sidepanel.js"></script>
+</body>
+
 </html>
